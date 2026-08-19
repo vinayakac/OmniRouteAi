@@ -246,10 +246,10 @@
     "test:all": "npm run test:unit && npm run test:vitest && npm run test:vitest:ui && npm run test:ecosystem && npm run test:e2e",
     "check": "npm run lint && npm run test",
     "prepublishOnly": "npm run build:cli-api && npm run build:cli && npm run check:pack-artifact",
-    "postinstall": "node scripts/build/postinstall.mjs",
+    "postinstall": "node -e \"if(require('fs').existsSync('scripts/build/postinstall.mjs'))require('child_process').execSync('node scripts/build/postinstall.mjs',{stdio:'inherit'})\"",
     "uninstall": "node scripts/build/uninstall.mjs",
     "uninstall:full": "node scripts/build/uninstall.mjs --full",
-    "prepare": "husky",
+    "prepare": "husky || true",
     "system-info": "node scripts/dev/system-info.mjs",
     "build:cli-api": "node --import tsx/esm scripts/cli/generate-api-commands.mjs",
     "postbuild": "node scripts/build/colocate-standalone.mjs",
@@ -494,6 +494,12 @@
     "nanoid": "^3.3.17",
     "monaco-editor": {
       "dompurify": "^3.4.13"
+    },
+    "marked-terminal": {
+      "marked": "$marked"
+    },
+    "@lobehub/icons": {
+      "@lobehub/ui": "*"
     }
   }
 }
